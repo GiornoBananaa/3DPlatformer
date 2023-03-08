@@ -46,18 +46,19 @@ public class CharacterMovementController : MonoBehaviour
         }
     }
 
-    public void LaunchSpeedBoost()
+    public void LaunchSpeedBoost(GameObject can)
     {
-        StartCoroutine(SpeedBoost());
+        can.SetActive(false);
+        StartCoroutine(SpeedBoost(can));
     }
 
-    private IEnumerator SpeedBoost()
+    private IEnumerator SpeedBoost(GameObject can)
     {
         float _deafultSpeed = _speed;
         float _deafultJump = _jumpForce;
 
 
-        while(Camera.main.fieldOfView < 79)
+        while (Camera.main.fieldOfView < 79)
         {
             Camera.main.fieldOfView = Mathf.Lerp(Camera.main.fieldOfView, 80, 0.1f);
             yield return new WaitForSeconds(0.01f);
@@ -65,7 +66,10 @@ public class CharacterMovementController : MonoBehaviour
 
         _speed *= _speedBoost;
         _jumpForce *= _jumpBoost;
+
         yield return new WaitForSeconds(_boostTime);
+
+        can.SetActive(true);
 
         while (Camera.main.fieldOfView > 61)
         {

@@ -18,8 +18,7 @@ public class PaintCanCollector : MonoBehaviour
     {
         if (other.gameObject.layer == _sprayLayer)
         {
-            Destroy(other.gameObject);
-            _characterMovement.LaunchSpeedBoost();
+            _characterMovement.LaunchSpeedBoost(other.gameObject);
         }
     }
 }

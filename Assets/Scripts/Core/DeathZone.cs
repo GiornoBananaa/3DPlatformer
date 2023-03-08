@@ -4,17 +4,13 @@ using UnityEngine;
 
 public class DeathZone : MonoBehaviour
 {
-    private Transform _playerSpawn;
-
-    private void Start()
-    {
-        _playerSpawn = GetComponentInChildren<Transform>();
-    }
+    [SerializeField] private Transform _playerSpawn;
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.GetComponent<CharacterMovementController>())
         {
+            Debug.Log(_playerSpawn.name);
             other.gameObject.transform.position = _playerSpawn.position;
         }
         //if (other.gameObject.GetComponent<ImportantObject>()) { }
