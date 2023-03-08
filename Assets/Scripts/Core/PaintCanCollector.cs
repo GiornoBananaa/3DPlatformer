@@ -5,32 +5,21 @@ using UnityEngine.SceneManagement;
 
 public class PaintCanCollector : MonoBehaviour
 {
-    [SerializeField] private int _playerLayer;
+    [SerializeField] private int _sprayLayer;
 
-    private int _sprayCans;
+    private CharacterMovementController _characterMovement;
 
-    void Start()
+    private void Start()
     {
-        PlayerPrefs.GetInt("Cans", 0);
-        SceneManager.activeSceneChanged += SaveData;
+        _characterMovement = GetComponentInParent<CharacterMovementController>();
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.layer == _playerLayer)
+        if (other.gameObject.layer == _sprayLayer)
         {
             Destroy(other.gameObject);
-            _sprayCans++;
+            _characterMovement.LaunchSpeedBoost();
         }
-    }
-
-    private void SaveData(Scene current, Scene next)
-    {
-        PlayerPrefs.Save();
-    }
-
-    private void OnApplicationQuit()
-    {
-        PlayerPrefs.Save();
     }
 }

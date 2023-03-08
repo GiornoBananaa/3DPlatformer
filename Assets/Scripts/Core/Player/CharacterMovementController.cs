@@ -5,6 +5,9 @@ using UnityEngine;
 public class CharacterMovementController : MonoBehaviour
 {
     [SerializeField] private GameObject _lookRotation;
+    [SerializeField] private int _boostTime;
+    [SerializeField] private float _speedBoost;
+    [SerializeField] private float _jumpBoost;
     [SerializeField] private float _speed;
     [SerializeField] private float _jumpForce;
     [SerializeField] private float _gravity;
@@ -41,5 +44,37 @@ public class CharacterMovementController : MonoBehaviour
             Vector3 _velocityY = new Vector3(_rigidbody.velocity.x , _y, _rigidbody.velocity.z);
             if (_y > 0.1f || _y < -0.1f) _rigidbody.velocity = _velocityY;
         }
+    }
+
+    public void LaunchSpeedBoost()
+    {
+        StartCoroutine(SpeedBoost());
+    }
+
+    private IEnumerator SpeedBoost()
+    {
+        float _deafultSpeed = _speed;
+        float _deafultJump = _jumpForce;
+
+
+        while(Camera.main.fieldOfView < 79)
+        {
+            Camera.main.fieldOfView = Mathf.Lerp(Camera.main.fieldOfView, 80, 0.1f);
+            yield return new WaitForSeconds(0.01f);
+        }
+
+        _speed *= _speedBoost;
+        _jumpForce *= _jumpBoost;
+        yield return new WaitForSeconds(_boostTime);
+
+        while (Camera.main.fieldOfView > 61)
+        {
+            Camera.main.fieldOfView = Mathf.Lerp(Camera.main.fieldOfView, 60, 0.1f);
+            yield return new WaitForSeconds(0.01f);
+        }
+
+
+        _speed = _deafultSpeed;
+        _jumpForce = _deafultJump;
     }
 }
