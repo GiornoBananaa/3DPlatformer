@@ -17,7 +17,7 @@ public class DeathZone : MonoBehaviour
 
         if (other.gameObject.GetComponent<ImportantObject>()) 
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
     }
 }
