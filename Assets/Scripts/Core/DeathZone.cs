@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class DeathZone : MonoBehaviour
 {
@@ -13,6 +14,10 @@ public class DeathZone : MonoBehaviour
             Debug.Log(_playerSpawn.name);
             other.gameObject.transform.position = _playerSpawn.position;
         }
-        //if (other.gameObject.GetComponent<ImportantObject>()) { }
+
+        if (other.gameObject.GetComponent<ImportantObject>()) 
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
     }
 }
