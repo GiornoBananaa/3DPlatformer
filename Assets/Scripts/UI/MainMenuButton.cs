@@ -10,6 +10,7 @@ public class MainMenuButton : MonoBehaviour
     
     void Start()
     {
+        Cursor.lockState = CursorLockMode.None;
         _mainMenuButton.onClick.AddListener(() => SceneManager.LoadScene(0));
     }
 }

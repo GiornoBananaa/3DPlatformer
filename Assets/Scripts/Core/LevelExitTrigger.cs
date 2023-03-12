@@ -9,7 +9,11 @@ public class LevelExitTrigger : MonoBehaviour
     {
         if (other.GetComponent<CharacterMovementController>())
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+            int nextScene = SceneManager.GetActiveScene().buildIndex + 1;
+
+            if(nextScene != 4) SceneManager.LoadScene(nextScene);
+            PlayerPrefs.SetInt("Level", nextScene);
+            PlayerPrefs.Save();
         }
     }
 }

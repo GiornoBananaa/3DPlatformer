@@ -1,18 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class ContinueButton : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField] private Button _continueButton;
 
-    // Update is called once per frame
-    void Update()
+    private void Start()
     {
-        
+        _continueButton.onClick.AddListener(() => SceneManager.LoadScene(PlayerPrefs.GetInt("Level", 1)));
     }
 }
