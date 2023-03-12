@@ -17,6 +17,7 @@ public class CharacterMovementController : MonoBehaviour
 
     void Start()
     {
+        Cursor.lockState = CursorLockMode.Locked;
         Physics.gravity = -Vector3.up * _gravity;
         _jumpPremission = GetComponentInChildren<JumpPermission>();
         _rigidbody = GetComponent<Rigidbody>();
