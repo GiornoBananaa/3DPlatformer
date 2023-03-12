@@ -5,6 +5,8 @@ using UnityEngine;
 public class CharacterMovementController : MonoBehaviour
 {
     [SerializeField] private GameObject _lookRotation;
+    [SerializeField] private AudioClip _jumpSound;
+    [SerializeField] private AudioClip _hitSound;
     [SerializeField] private int _boostTime;
     [SerializeField] private float _speedBoost;
     [SerializeField] private float _jumpBoost;
@@ -13,12 +15,15 @@ public class CharacterMovementController : MonoBehaviour
     [SerializeField] private float _gravity;
 
     private Rigidbody _rigidbody;
+    private AudioSource _audio;
     private JumpPermission _jumpPremission;
 
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
         Physics.gravity = -Vector3.up * _gravity;
+
+        _audio = GetComponent<AudioSource>();
         _jumpPremission = GetComponentInChildren<JumpPermission>();
         _rigidbody = GetComponent<Rigidbody>();
     }
@@ -33,6 +38,8 @@ public class CharacterMovementController : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.Space))
             {
+                _audio.clip = _jumpSound;
+                _audio.Play();
                 _y = _jumpForce;
             }
 
@@ -45,6 +52,12 @@ public class CharacterMovementController : MonoBehaviour
             Vector3 _velocityY = new Vector3(_rigidbody.velocity.x , _y, _rigidbody.velocity.z);
             if (_y > 0.1f || _y < -0.1f) _rigidbody.velocity = _velocityY;
         }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        _audio.clip = _hitSound;
+        _audio.Play();
     }
 
     public void LaunchSpeedBoost(GameObject can)
