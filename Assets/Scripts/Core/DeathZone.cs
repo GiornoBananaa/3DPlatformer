@@ -5,19 +5,19 @@ using UnityEngine.SceneManagement;
 
 public class DeathZone : MonoBehaviour
 {
-    [SerializeField] private Transform _playerSpawn;
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.GetComponent<CharacterMovementController>())
         {
-            Debug.Log(_playerSpawn.name);
-            other.gameObject.transform.position = _playerSpawn.position;
+            other.gameObject.transform.position = CheckPointTrigger.CheckPoint;
+            other.GetComponent<Rigidbody>().velocity = Vector3.zero;
         }
 
         if (other.gameObject.GetComponent<ImportantObject>()) 
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            other.gameObject.transform.localPosition = Vector3.zero;
+            other.GetComponent<Rigidbody>().velocity = Vector3.zero;
         }
     }
 }
